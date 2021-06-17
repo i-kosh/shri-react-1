@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react'
-import { DefaultLayout } from '../layouts/default'
+import { DefaultLayout } from '../layouts/Default'
 import { useParams } from 'react-router-dom'
 
 export const BuildPage: FunctionComponent = (props) => {

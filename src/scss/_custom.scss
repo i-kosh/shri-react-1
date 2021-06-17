@@ -1,5 +1,6 @@
 :root {
   --color-text: #000;
+  --color-text-second: #7f8285;
   --color-text-disabled: #7f7f7f;
   --color-bg-main: #fff;
   --color-bg-second: #f0f2f3;
@@ -29,7 +30,8 @@ html {
 }
 
 body {
-  display: block;
+  display: flex;
+  flex-direction: column;
   color: var(--color-text);
   background-color: var(--color-bg-main);
   width: 100%;
@@ -37,4 +39,20 @@ body {
   font-family: Roboto, Arial, Helvetica, sans-serif;
   font-weight: 400;
   font-size: 13px;
+}
+
+#root {
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+}
+
+.footer-link {
+  color: var(--color-text-second);
+  text-decoration: none;
+  transition: color linear 0.1s;
+
+  &:hover {
+    color: #e00000;
+  }
 }
