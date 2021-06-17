@@ -1,0 +1,40 @@
+:root {
+  --color-text: #000;
+  --color-text-disabled: #7f7f7f;
+  --color-bg-main: #fff;
+  --color-bg-second: #f0f2f3;
+  --color-bg-action: #fc0;
+  --color-bg-action-hovered: #f2c200;
+  --color-bg-disabled: #f2f2f2;
+  --color-bg-control: #e6e6e6;
+  --color-bg-control-hovered: #dbdbdb;
+  --color-bg-control-disabled: var(--color-bg-disabled);
+  --color-success: #00b341;
+  --color-warn: #ff9a00;
+  --color-error: #f33;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+body {
+  display: block;
+  color: var(--color-text);
+  background-color: var(--color-bg-main);
+  width: 100%;
+  flex-grow: 1;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+}
