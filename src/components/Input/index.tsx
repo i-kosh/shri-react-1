@@ -1,39 +1,38 @@
-import { FunctionComponent, InputHTMLAttributes, useRef, useState } from 'react'
+import { FormEventHandler, FunctionComponent, useRef, useState } from 'react'
 import classnames from 'classnames'
 import './style.scss'
 
-type NativeAttributes = Omit<
-  InputHTMLAttributes<HTMLInputElement>,
-  keyof InputProps
->
-
 export interface InputProps {
-  attributes?: NativeAttributes
+  defaultValue?: string
   clearable?: boolean
+  onInput?: (val: string) => unknown
+  disabled?: boolean
+  placeholder?: string
+  type?: string
 }
 
 export const Input: FunctionComponent<InputProps> = (props) => {
-  const { attributes, clearable } = props
   const rootClasses = classnames({
     input: true,
-    'input--clearable': clearable,
+    'input--clearable': props.clearable,
   })
 
   const inputRef = useRef<null | HTMLInputElement>(null)
-
   const [isClearable, setIsClearable] = useState(
-    !!(clearable && inputRef.current?.value)
+    !!(props.clearable && props.defaultValue && !props.disabled)
   )
 
   const onClearClick = () => {
     if (inputRef.current) {
       inputRef.current.value = ''
+      props.onInput && props.onInput('')
       setIsClearable(false)
     }
   }
+  const onInputHandler: FormEventHandler<HTMLInputElement> = (evt) => {
+    props.onInput && props.onInput(evt.currentTarget.value)
 
-  const onInput = () => {
-    if (inputRef.current?.value && clearable) {
+    if (inputRef.current?.value && props.clearable) {
       setIsClearable(true)
     }
   }
@@ -41,10 +40,12 @@ export const Input: FunctionComponent<InputProps> = (props) => {
   return (
     <div className={rootClasses}>
       <input
+        disabled={props.disabled}
+        defaultValue={props.defaultValue}
         ref={inputRef}
-        onInput={onInput}
+        onInput={onInputHandler}
         className="input__elem"
-        {...attributes}
+        type={props.type}
       />
 
       {isClearable && (
