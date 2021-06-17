@@ -1,21 +1,17 @@
-import { FunctionComponent, ReactNode, ButtonHTMLAttributes } from 'react'
+import { FunctionComponent, ReactNode } from 'react'
 import classnames from 'classnames'
 import './style.scss'
-
-type NativeAttributes = Omit<
-  ButtonHTMLAttributes<HTMLButtonElement>,
-  keyof ButtonProps
->
 
 export interface ButtonProps {
   prepend?: ReactNode
   btnStyle?: 'accent' | 'default' | 'clear'
   size?: 'md' | 'sm' | 'xs'
-  attributes?: NativeAttributes
+  href?: string
+  onClick?: () => void
 }
 
 export const Button: FunctionComponent<ButtonProps> = (props) => {
-  const { children, prepend, btnStyle, size, attributes } = props
+  const { children, prepend, btnStyle, size, href, onClick } = props
   const rootClasses = classnames({
     button: true,
     'button--accent': btnStyle === 'accent',
@@ -25,11 +21,13 @@ export const Button: FunctionComponent<ButtonProps> = (props) => {
     'button--xs': size === 'xs',
   })
 
+  const Tag = href ? 'a' : 'button'
+
   return (
-    <button className={rootClasses} {...attributes}>
+    <Tag className={rootClasses} href={href || undefined} onClick={onClick}>
       {prepend && <div className="button__prepend">{prepend}</div>}
 
       <div className="button__content">{children}</div>
-    </button>
+    </Tag>
   )
 }
