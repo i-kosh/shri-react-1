@@ -1,0 +1,40 @@
+@import '../../scss/variables.scss';
+
+.run-build-button {
+  display: none;
+  margin-right: 8px;
+
+  @media (max-width: $desktop) {
+    display: block;
+  }
+}
+
+.run-build-button-desktop {
+  margin-right: 8px;
+  display: none;
+
+  @media (min-width: $desktop) {
+    display: block;
+  }
+}
+
+.build-list {
+  list-style: none;
+}
+
+.build-list__item {
+  &:not(:last-child) {
+    margin-bottom: 8px;
+  }
+}
+
+.build-list__more {
+  width: 100%;
+  margin-top: 8px;
+  margin-bottom: 16px;
+
+  @media (min-width: $desktop) {
+    width: auto;
+    margin-bottom: 20px;
+  }
+}

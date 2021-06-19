@@ -1,6 +1,7 @@
 import { MainPage } from './pages/Main'
 import { BuildPage } from './pages/Build'
 import { SettingsPage } from './pages/Settings'
+import { BuildList } from './pages/BuildList'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 function App() {
@@ -9,6 +10,9 @@ function App() {
       <Switch>
         <Route exact path="/">
           <MainPage />
+        </Route>
+        <Route exact path="/test">
+          <BuildList />
         </Route>
         <Route exact path="/build/:buildId">
           <BuildPage />
