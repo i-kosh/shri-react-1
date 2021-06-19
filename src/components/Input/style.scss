@@ -42,6 +42,10 @@
   background-color: transparent;
 }
 
+.input__elem:disabled + .input__clear {
+  cursor: default;
+}
+
 .input--clearable {
   .input__elem {
     padding-right: 36px;

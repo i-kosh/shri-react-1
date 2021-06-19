@@ -1,53 +1,69 @@
-import { FormEventHandler, FunctionComponent, useRef, useState } from 'react'
+import {
+  FormEventHandler,
+  FunctionComponent,
+  useRef,
+  useState,
+  InputHTMLAttributes,
+} from 'react'
 import classnames from 'classnames'
 import './style.scss'
-import { InputHTMLAttributes } from 'react'
 
 type NativeAttrs = Omit<InputHTMLAttributes<HTMLInputElement>, keyof InputProps>
 
 export interface InputProps {
-  defaultValue?: string
-  clearable?: boolean
-  onInput?: (val: string) => unknown
   nativeAttrs?: NativeAttrs
+  className?: string
+  clearable?: boolean
   hideNumberArrows?: boolean
+  onInput?: FormEventHandler<HTMLInputElement>
 }
 
 export const Input: FunctionComponent<InputProps> = (props) => {
-  const rootClasses = classnames({
-    input: true,
-    'input--clearable': props.clearable,
-    'input--hide-arrows': props.hideNumberArrows,
-  })
+  const { className, nativeAttrs, clearable, hideNumberArrows } = props
+  const rootClasses =
+    classnames({
+      input: true,
+      'input--clearable': clearable,
+      'input--hide-arrows': hideNumberArrows,
+    }) + ` ${className || ''}`
 
   const inputRef = useRef<null | HTMLInputElement>(null)
+
   const [isClearable, setIsClearable] = useState(
-    !!(props.clearable && props.defaultValue && !props.nativeAttrs?.disabled)
+    !!(clearable && nativeAttrs?.defaultValue && !nativeAttrs?.disabled)
   )
 
   const onClearClick = () => {
-    if (inputRef.current) {
+    if (inputRef.current && !inputRef.current.disabled) {
       inputRef.current.value = ''
-      props.onInput && props.onInput('')
+      inputRef.current.dispatchEvent(
+        new Event('input', {
+          bubbles: true,
+          cancelable: true,
+        })
+      )
       setIsClearable(false)
     }
   }
-  const onInputHandler: FormEventHandler<HTMLInputElement> = (evt) => {
-    props.onInput && props.onInput(evt.currentTarget.value)
 
-    if (inputRef.current?.value && props.clearable) {
+  const onInputHandler: FormEventHandler<HTMLInputElement> = (evt) => {
+    if (inputRef.current?.value && clearable) {
       setIsClearable(true)
+    } else if (clearable) {
+      setIsClearable(false)
     }
+
+    props.onInput && props.onInput(evt)
   }
 
   return (
     <div className={rootClasses}>
       <input
-        {...props.nativeAttrs}
-        defaultValue={props.defaultValue}
+        className="input__elem"
+        defaultValue={nativeAttrs?.defaultValue}
         ref={inputRef}
         onInput={onInputHandler}
-        className="input__elem"
+        {...nativeAttrs}
       />
 
       {isClearable && (
