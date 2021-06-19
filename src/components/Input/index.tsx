@@ -71,6 +71,7 @@ export const Input: FunctionComponent<InputProps> = (props) => {
           onClick={onClearClick}
           className="input__clear"
           title="Clear"
+          type="button"
         ></button>
       )}
     </div>
