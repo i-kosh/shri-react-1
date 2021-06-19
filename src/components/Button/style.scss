@@ -45,6 +45,12 @@ $append-shift: 12px;
   }
 }
 
+.button__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .button__prepend {
   position: absolute;
   top: 0;
