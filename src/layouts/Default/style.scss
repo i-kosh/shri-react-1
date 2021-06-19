@@ -27,6 +27,7 @@
 .page__buttons {
   margin-left: auto;
   display: flex;
+  flex-shrink: 0;
 }
 
 .page__main {
