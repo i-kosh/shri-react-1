@@ -1,13 +1,30 @@
 import { FunctionComponent } from 'react'
 import { PageContainer } from '../../components/PageContainer'
+import classNames from 'classnames'
 import './style.scss'
 
-export const DefaultLayout: FunctionComponent = ({ children }) => {
+export interface DefaultLayoutProps {
+  title?: string
+}
+
+export const DefaultLayout: FunctionComponent<DefaultLayoutProps> = ({
+  children,
+  title,
+}) => {
+  const headerTitle = title || 'Scool CI Server'
+
+  const titleClasses = classNames({
+    'page__header-title': true,
+    'page__header-title--dimm': !title,
+  })
+
   return (
     <div className="page">
-      <header className="page__header">
+      <header>
         <PageContainer>
-          <h1>Scool CI Server</h1>
+          <div className="page__header">
+            <h1 className={titleClasses}>{headerTitle}</h1>
+          </div>
         </PageContainer>
       </header>
 

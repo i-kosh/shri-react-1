@@ -10,6 +10,21 @@
 
 .page__header {
   min-height: 52px;
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.page__header-title {
+  font-size: 18px;
+
+  @media (min-width: $desktop) {
+    font-size: 22px;
+  }
+}
+
+.page__header-title--dimm {
+  color: var(--color-text-second);
 }
 
 .page__main {
@@ -54,4 +69,5 @@
 
 .footer-copy {
   cursor: default;
+  color: var(--color-text-second);
 }
