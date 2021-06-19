@@ -1,6 +1,6 @@
-import { MainPage } from './pages/main'
-import { BuildPage } from './pages/build'
-import { SettingsPage } from './pages/settings'
+import { MainPage } from './pages/Main'
+import { BuildPage } from './pages/Build'
+import { SettingsPage } from './pages/Settings'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 function App() {
