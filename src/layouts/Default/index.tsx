@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react'
+import { FunctionComponent, ReactNode } from 'react'
 import { PageContainer } from '../../components/PageContainer'
 import { ButtonRouter } from '../../components/ButtonRouter'
 import { useRouteMatch } from 'react-router-dom'
@@ -8,11 +8,13 @@ import { ReactComponent as CogSvg } from '../../assets/cog.svg'
 
 export interface DefaultLayoutProps {
   title?: string
+  addButtons?: ReactNode
 }
 
 export const DefaultLayout: FunctionComponent<DefaultLayoutProps> = ({
   children,
   title,
+  addButtons,
 }) => {
   const headerTitle = title || 'Scool CI Server'
 
@@ -24,32 +26,19 @@ export const DefaultLayout: FunctionComponent<DefaultLayoutProps> = ({
   const settingsRoute = useRouteMatch('/settings')
 
   const settingsButton = !settingsRoute && (
-    <>
-      <div className="page__button">
-        <ButtonRouter
-          path="/settings"
-          buttonProps={{
-            size: 'xs',
-            nativeAttrs: {
-              title: 'Settings',
-            },
-          }}
-        >
-          <CogSvg />
-        </ButtonRouter>
-      </div>
-      <div className="page__button-desktop">
-        <ButtonRouter
-          path="/settings"
-          buttonProps={{
-            size: 'sm',
-            prepend: <CogSvg />,
-          }}
-        >
-          Settings
-        </ButtonRouter>
-      </div>
-    </>
+    <div>
+      <ButtonRouter
+        path="/settings"
+        buttonProps={{
+          size: 'xs',
+          nativeAttrs: {
+            title: 'Settings',
+          },
+        }}
+      >
+        <CogSvg />
+      </ButtonRouter>
+    </div>
   )
 
   return (
@@ -59,7 +48,10 @@ export const DefaultLayout: FunctionComponent<DefaultLayoutProps> = ({
           <div className="page__header">
             <h1 className={titleClasses}>{headerTitle}</h1>
 
-            <div className="page__buttons">{settingsButton}</div>
+            <div className="page__buttons">
+              {addButtons}
+              {settingsButton}
+            </div>
           </div>
         </PageContainer>
       </header>

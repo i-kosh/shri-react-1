@@ -11,36 +11,22 @@
 .page__header {
   min-height: 52px;
   display: flex;
-  align-items: center;
-  padding: 8px 0;
+  padding: 12px 0;
+  margin-bottom: 8px;
 }
 
 .page__header-title {
   font-size: 18px;
+  margin-right: 8px;
 
   @media (min-width: $desktop) {
-    font-size: 22px;
+    font-size: 24px;
   }
 }
 
 .page__buttons {
   margin-left: auto;
-}
-
-.page__button {
-  display: none;
-
-  @media (max-width: $desktop) {
-    display: block;
-  }
-}
-
-.page__button-desktop {
-  display: none;
-
-  @media (min-width: $desktop) {
-    display: block;
-  }
+  display: flex;
 }
 
 .page__main {
