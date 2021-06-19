@@ -1,7 +1,10 @@
 import { FunctionComponent } from 'react'
 import { PageContainer } from '../../components/PageContainer'
+import { ButtonRouter } from '../../components/ButtonRouter'
+import { useRouteMatch } from 'react-router-dom'
 import classNames from 'classnames'
 import './style.scss'
+import { ReactComponent as CogSvg } from '../../assets/cog.svg'
 
 export interface DefaultLayoutProps {
   title?: string
@@ -18,12 +21,45 @@ export const DefaultLayout: FunctionComponent<DefaultLayoutProps> = ({
     'page__header-title--dimm': !title,
   })
 
+  const settingsRoute = useRouteMatch('/settings')
+
+  const settingsButton = !settingsRoute && (
+    <>
+      <div className="page__button">
+        <ButtonRouter
+          path="/settings"
+          buttonProps={{
+            size: 'xs',
+            nativeAttrs: {
+              title: 'Settings',
+            },
+          }}
+        >
+          <CogSvg />
+        </ButtonRouter>
+      </div>
+      <div className="page__button-desktop">
+        <ButtonRouter
+          path="/settings"
+          buttonProps={{
+            size: 'sm',
+            prepend: <CogSvg />,
+          }}
+        >
+          Settings
+        </ButtonRouter>
+      </div>
+    </>
+  )
+
   return (
     <div className="page">
       <header>
         <PageContainer>
           <div className="page__header">
             <h1 className={titleClasses}>{headerTitle}</h1>
+
+            <div className="page__buttons">{settingsButton}</div>
           </div>
         </PageContainer>
       </header>

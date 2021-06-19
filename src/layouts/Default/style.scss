@@ -23,8 +23,24 @@
   }
 }
 
-.page__header-title--dimm {
-  color: var(--color-text-second);
+.page__buttons {
+  margin-left: auto;
+}
+
+.page__button {
+  display: none;
+
+  @media (max-width: $desktop) {
+    display: block;
+  }
+}
+
+.page__button-desktop {
+  display: none;
+
+  @media (min-width: $desktop) {
+    display: block;
+  }
 }
 
 .page__main {
@@ -69,5 +85,9 @@
 
 .footer-copy {
   cursor: default;
+  color: var(--color-text-second);
+}
+
+.page__header-title--dimm {
   color: var(--color-text-second);
 }
