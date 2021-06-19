@@ -38,7 +38,10 @@ body {
   background-color: var(--color-bg-main);
   width: 100%;
   flex-grow: 1;
-  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-family: 'YS Text', 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-feature-settings: 'liga', 'kern';
+  -moz-font-feature-settings: 'liga', 'kern';
+  font-feature-settings: 'liga', 'kern';
   font-weight: 400;
   font-size: 13px;
 }
