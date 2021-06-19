@@ -47,3 +47,15 @@
     padding-right: 36px;
   }
 }
+
+.input--hide-arrows {
+  .input__elem::-webkit-outer-spin-button,
+  .input__elem::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .input__elem[type='number'] {
+    -moz-appearance: textfield;
+  }
+}
