@@ -1,33 +1,55 @@
-import { FunctionComponent, ReactNode } from 'react'
+import {
+  createElement,
+  FunctionComponent,
+  ReactNode,
+  AnchorHTMLAttributes,
+  ButtonHTMLAttributes,
+} from 'react'
 import classnames from 'classnames'
 import './style.scss'
+
+type NativeAttrs =
+  | AnchorHTMLAttributes<HTMLAnchorElement>
+  | ButtonHTMLAttributes<HTMLButtonElement>
 
 export interface ButtonProps {
   prepend?: ReactNode
   btnStyle?: 'accent' | 'default' | 'clear'
   size?: 'md' | 'sm' | 'xs'
-  href?: string
-  onClick?: () => void
+  tag?: 'a' | 'button'
+  className?: string
+  nativeAttrs?: NativeAttrs
 }
 
-export const Button: FunctionComponent<ButtonProps> = (props) => {
-  const { children, prepend, btnStyle, size, href, onClick } = props
-  const rootClasses = classnames({
-    button: true,
-    'button--accent': btnStyle === 'accent',
-    'button--clear': btnStyle === 'clear',
-    'button--prepended': !!prepend,
-    'button--sm': size === 'sm',
-    'button--xs': size === 'xs',
-  })
+export const Button: FunctionComponent<ButtonProps> = ({
+  children,
+  prepend,
+  btnStyle,
+  size,
+  tag,
+  className,
+  nativeAttrs,
+}) => {
+  const rootClasses =
+    classnames({
+      button: true,
+      'button--accent': btnStyle === 'accent',
+      'button--clear': btnStyle === 'clear',
+      'button--prepended': !!prepend,
+      'button--sm': size === 'sm',
+      'button--xs': size === 'xs',
+    }) + ` ${className || ''}`
 
-  const Tag = href ? 'a' : 'button'
-
-  return (
-    <Tag className={rootClasses} href={href || undefined} onClick={onClick}>
+  return createElement<NativeAttrs & ButtonProps>(
+    tag || 'button',
+    {
+      className: rootClasses,
+      ...nativeAttrs,
+    },
+    <>
       {prepend && <div className="button__prepend">{prepend}</div>}
 
       <div className="button__content">{children}</div>
-    </Tag>
+    </>
   )
 }
