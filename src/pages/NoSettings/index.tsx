@@ -4,7 +4,7 @@ import { ButtonRouter } from '../../components/ButtonRouter'
 import { ReactComponent as NotFoundSvg } from '../../assets/settings-not-found.svg'
 import './style.scss'
 
-export const MainPage: FunctionComponent = (props) => {
+export const NoSettings: FunctionComponent = (props) => {
   return (
     <DefaultLayout>
       <div className="no-settings">

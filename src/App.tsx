@@ -1,4 +1,4 @@
-import { MainPage } from './pages/Main'
+import { NoSettings } from './pages/NoSettings'
 import { BuildPage } from './pages/Build'
 import { SettingsPage } from './pages/Settings'
 import { BuildList } from './pages/BuildList'
@@ -9,10 +9,10 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <MainPage />
+          <BuildList />
         </Route>
         <Route exact path="/test">
-          <BuildList />
+          <NoSettings />
         </Route>
         <Route exact path="/build/:buildId">
           <BuildPage />
