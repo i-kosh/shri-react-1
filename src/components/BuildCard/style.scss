@@ -1,6 +1,7 @@
 @import '../../scss/variables.scss';
 
 .build-card {
+  display: block;
   width: 100%;
   background-color: var(--color-bg-main);
   box-shadow: 0 0 1px rgba(67, 68, 69, 0.3), 0 1px 1px rgba(67, 68, 69, 0.3);
@@ -9,7 +10,6 @@
 
   @media (min-width: $desktop) {
     padding: 12px 24px 12px 56px;
-    // display: flex;
   }
 }
 
@@ -68,14 +68,6 @@
   display: flex;
   border-top: 1px solid var(--color-bg-second);
   padding-top: 8px;
-
-  // @media (min-width: $desktop) {
-  //   margin-left: auto;
-  //   flex-direction: column;
-  //   border-top: 0;
-  //   padding-top: 0;
-  //   justify-content: space-between;
-  // }
 }
 
 .build-card__status-message {
@@ -145,6 +137,11 @@
   &:hover {
     box-shadow: 0 0 1px rgba(67, 68, 69, 0.3), 0 2px 8px rgba(67, 68, 69, 0.3);
   }
+}
+
+.build-card--link {
+  text-decoration: none;
+  color: inherit;
 }
 
 .build-card--oneline {

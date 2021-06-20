@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, AnchorHTMLAttributes } from 'react'
 import { ReactComponent as SuccessSvg } from '../../assets/success.svg'
 import { ReactComponent as FailSvg } from '../../assets/fail.svg'
 import { ReactComponent as WaitSvg } from '../../assets/wait.svg'
@@ -7,6 +7,7 @@ import { ReactComponent as CommitSvg } from '../../assets/commit.svg'
 import { ReactComponent as CalendarSvg } from '../../assets/calendar.svg'
 import { ReactComponent as TimeSvg } from '../../assets/time.svg'
 import classnames from 'classnames'
+import { useHistory } from 'react-router-dom'
 import './style.scss'
 
 export interface BuildCardProps {
@@ -21,6 +22,7 @@ export interface BuildCardProps {
   selectable?: boolean
   className?: string
   oneline?: boolean
+  path?: string
 }
 
 export const BuildCard: FC<BuildCardProps> = (props) => {
@@ -36,6 +38,7 @@ export const BuildCard: FC<BuildCardProps> = (props) => {
     startDate,
     selectable,
     oneline,
+    path,
   } = props
 
   const rootClassnames =
@@ -46,6 +49,7 @@ export const BuildCard: FC<BuildCardProps> = (props) => {
       'build-card--wait': status === 'wait',
       'build-card--selectable': selectable,
       'build-card--oneline': oneline,
+      'build-card--link': !!path,
     }) + ` ${className || ''}`
 
   const shortHash = commitHash.slice(0, 6)
@@ -88,8 +92,25 @@ export const BuildCard: FC<BuildCardProps> = (props) => {
       <WaitSvg />
     )
 
+  const linkProps: AnchorHTMLAttributes<HTMLAnchorElement> = {
+    href: path || '',
+    onClick: (evt) => {
+      evt.preventDefault()
+      history.push(path || '/')
+    },
+  }
+  const Tag: FC = path
+    ? ({ children }) => (
+        <a className={rootClassnames} {...linkProps}>
+          {children}
+        </a>
+      )
+    : ({ children }) => <div className={rootClassnames}>{children}</div>
+
+  const history = useHistory()
+
   return (
-    <div className={rootClassnames}>
+    <Tag>
       <div>
         <div className="build-card__status-message">
           <p className="build-card__status">
@@ -131,6 +152,6 @@ export const BuildCard: FC<BuildCardProps> = (props) => {
           <span>{getDurationString()}</span>
         </p>
       </div>
-    </div>
+    </Tag>
   )
 }
