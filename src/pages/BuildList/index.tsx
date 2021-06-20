@@ -1,11 +1,16 @@
-import { FunctionComponent } from 'react'
+import { FunctionComponent, useState } from 'react'
 import { DefaultLayout } from '../../layouts/Default'
 import { Button } from '../../components/Button'
 import { ReactComponent as PlaySvg } from '../../assets/play.svg'
 import { BuildCard, BuildCardProps } from '../../components/BuildCard'
+import { Modal } from '../../components/Modal'
+import { Box } from '../../components/Box'
+import { Input } from '../../components/Input'
 import './style.scss'
 
 export const BuildList: FunctionComponent = (props) => {
+  const [isModalOpen, setModalOpen] = useState(false)
+
   const settingsButton = (
     <>
       <div className="run-build-button">
@@ -13,13 +18,24 @@ export const BuildList: FunctionComponent = (props) => {
           size="xs"
           nativeAttrs={{
             title: 'Run build',
+            onClick: () => {
+              setModalOpen(true)
+            },
           }}
         >
           <PlaySvg />
         </Button>
       </div>
       <div className="run-build-button-desktop">
-        <Button size="sm" prepend={<PlaySvg />}>
+        <Button
+          size="sm"
+          prepend={<PlaySvg />}
+          nativeAttrs={{
+            onClick: () => {
+              setModalOpen(true)
+            },
+          }}
+        >
           Run build
         </Button>
       </div>
@@ -96,14 +112,43 @@ export const BuildList: FunctionComponent = (props) => {
     esome-repo-with-long-long-long-repo-name"
     >
       <ul className="build-list">
-        {testData.map((props) => (
-          <li className="build-list__item">
+        {testData.map((props, i) => (
+          <li className="build-list__item" key={i}>
             <BuildCard {...props}></BuildCard>
           </li>
         ))}
       </ul>
 
       <Button className="build-list__more ">Show more</Button>
+
+      <Modal open={isModalOpen}>
+        <Box modal className="build-list__newbuild newbuild">
+          <h2 className="newbuild__title">New build</h2>
+          <p className="newbuild__sub">
+            Enter the commit hash which you want to build.
+          </p>
+          <Input
+            className="newbuild__input"
+            clearable
+            nativeAttrs={{
+              placeholder: 'Commit hash',
+            }}
+          ></Input>
+          <Button className="newbuild__run" btnStyle="accent">
+            Run build
+          </Button>
+          <Button
+            className="newbuild__cancel"
+            nativeAttrs={{
+              onClick: () => {
+                setModalOpen(false)
+              },
+            }}
+          >
+            Cancel
+          </Button>
+        </Box>
+      </Modal>
     </DefaultLayout>
   )
 }

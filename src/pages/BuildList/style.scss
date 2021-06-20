@@ -38,3 +38,25 @@
     margin-bottom: 20px;
   }
 }
+
+.newbuild {
+  max-width: 485px;
+  width: 100%;
+
+  &__title {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  &__sub {
+    margin-bottom: 12px;
+  }
+
+  &__input {
+    margin-bottom: 12px;
+  }
+
+  &__run {
+    margin-right: 10px;
+  }
+}
