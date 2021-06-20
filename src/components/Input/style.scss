@@ -1,3 +1,13 @@
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 .input {
   display: inline-block;
   width: 100%;
@@ -11,6 +21,9 @@
   height: 36px;
   width: 100%;
   padding: 0 13px;
+  transition-property: border-color;
+  transition-duration: 0.1s;
+  transition-timing-function: linear;
 
   &:focus {
     border-color: var(--color-border-focused);
@@ -26,6 +39,15 @@
     cursor: default;
     background-color: var(--color-bg-disabled);
   }
+}
+
+.input__error {
+  font-size: 11px;
+  color: var(--color-error);
+  padding-top: 4px;
+  padding-left: 2px;
+  animation-name: appear;
+  animation-duration: 0.6s;
 }
 
 .input__clear {
@@ -49,6 +71,12 @@
 .input--clearable {
   .input__elem {
     padding-right: 36px;
+  }
+}
+
+.input--error {
+  .input__elem {
+    border-color: var(--color-error);
   }
 }
 
