@@ -4,10 +4,12 @@ import { SettingsPage } from './pages/Settings'
 import { BuildList } from './pages/BuildList'
 import { NotFound } from './pages/404'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { ScrollToTop } from './components/ScrollToTop'
 
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Switch>
         <Route exact path="/">
           <BuildList />
