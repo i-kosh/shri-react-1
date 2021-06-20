@@ -114,7 +114,7 @@ export const BuildList: FunctionComponent = (props) => {
       <ul className="build-list">
         {testData.map((props, i) => (
           <li className="build-list__item" key={i}>
-            <BuildCard {...props}></BuildCard>
+            <BuildCard {...props} path={`/build/${props.number}`}></BuildCard>
           </li>
         ))}
       </ul>
