@@ -1,16 +1,39 @@
-import { FunctionComponent, FormEventHandler } from 'react'
+import { FunctionComponent } from 'react'
 import { DefaultLayout } from '../../layouts/Default'
 import { InputWithLabel } from '../../components/InputWithLabel'
 import { InputShort } from '../../components/InputShort'
 import { Button } from '../../components/Button'
 import { ButtonRouter } from '../../components/ButtonRouter'
+import { useFormik } from 'formik'
 import './style.scss'
 
 export const SettingsPage: FunctionComponent = (props) => {
-  const onFormSubmit: FormEventHandler<HTMLFormElement> = (evt) => {
-    evt.preventDefault()
-    console.log(evt)
-  }
+  const formic = useFormik({
+    initialValues: {
+      repo: '',
+      command: '',
+      branch: '',
+      minutes: '',
+    },
+    validate: (values) => {
+      const errors = {} as Partial<typeof values>
+
+      if (!values.repo) {
+        errors.repo = 'Required'
+      }
+
+      if (!values.command) {
+        errors.command = 'Required'
+      }
+
+      return errors
+    },
+    onSubmit: (values) => {
+      console.log('submit')
+      console.log(values)
+    },
+    validateOnBlur: false,
+  })
 
   return (
     <DefaultLayout>
@@ -20,7 +43,7 @@ export const SettingsPage: FunctionComponent = (props) => {
           Configure repository connection and synchronization settings.
         </p>
 
-        <form onSubmit={onFormSubmit} className="settings__form">
+        <form onSubmit={formic.handleSubmit} className="settings__form">
           <div className="settings__input">
             <InputWithLabel
               labelProps={{
@@ -29,9 +52,19 @@ export const SettingsPage: FunctionComponent = (props) => {
               }}
               inputProps={{
                 clearable: true,
+                onChange: (val) => {
+                  formic.setFieldValue('repo', val)
+                },
+                showErrorMessages: true,
+                error:
+                  formic.touched.repo && formic.errors.repo
+                    ? formic.errors.repo
+                    : undefined,
+                value: formic.values.repo,
                 nativeAttrs: {
                   placeholder: 'user-name/repo-name',
                   name: 'repo',
+                  onBlur: formic.handleBlur,
                 },
               }}
             />
@@ -44,10 +77,20 @@ export const SettingsPage: FunctionComponent = (props) => {
                 requiredMark: true,
               }}
               inputProps={{
+                showErrorMessages: true,
+                error:
+                  formic.touched.command && formic.errors.command
+                    ? formic.errors.command
+                    : undefined,
+                onChange: (val) => {
+                  formic.setFieldValue('command', val)
+                },
+                value: formic.values.command,
                 clearable: true,
                 nativeAttrs: {
                   placeholder: 'npm ci && npm run build',
                   name: 'command',
+                  onBlur: formic.handleBlur,
                 },
               }}
             />
@@ -59,10 +102,15 @@ export const SettingsPage: FunctionComponent = (props) => {
                 text: 'Main branch',
               }}
               inputProps={{
+                onChange: (val) => {
+                  formic.setFieldValue('branch', val)
+                },
+                value: formic.values.branch,
                 clearable: true,
                 nativeAttrs: {
                   placeholder: 'master',
                   name: 'branch',
+                  onBlur: formic.handleBlur,
                 },
               }}
             />
@@ -72,8 +120,18 @@ export const SettingsPage: FunctionComponent = (props) => {
             <InputShort
               labelProps={{ text: 'Synchronize every', onLeft: true }}
               inputProps={{
+                onChange: (val) => {
+                  if (`${val}`.length <= 3) {
+                    formic.setFieldValue('minutes', val)
+                  }
+                },
+                value: formic.values.minutes,
                 hideNumberArrows: true,
-                nativeAttrs: { type: 'number', name: 'period' },
+                nativeAttrs: {
+                  type: 'number',
+                  name: 'period',
+                  onBlur: formic.handleBlur,
+                },
               }}
               valName="minutes"
             ></InputShort>
